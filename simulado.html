@@ -108,13 +108,14 @@ function construir() {
 questoes.forEach((q, qi) => {
   const div = document.createElement('div');
   div.className = 'q';
+  div.dataset.qi = qi;
   div.innerHTML = `<div class="topo"><span class="bloco ${q.bloco}">${q.tipo}</span></div>
     <div class="enun">${q.txt}</div>`;
   q.opts.forEach((op, oi) => {
     const o = document.createElement('div');
     o.className = 'opt';
+    o.dataset.oi = oi;
     o.textContent = op;
-    o.onclick = () => responder(qi, oi, div, o);
     div.appendChild(o);
   });
   const ans = document.createElement('div');
@@ -126,6 +127,16 @@ questoes.forEach((q, qi) => {
 }
 
 construir();
+
+// Delegacao de evento: um unico listener no container (mais robusto a cliques reais)
+quiz.addEventListener('click', (e) => {
+  const opt = e.target.closest('.opt');
+  if (!opt || opt.classList.contains('bloq')) return;
+  const div = opt.closest('.q');
+  const qi = Number(div.dataset.qi);
+  const oi = Number(opt.dataset.oi);
+  responder(qi, oi, div, opt);
+});
 
 function responder(qi, oi, div, el) {
   if (respostas[qi] !== null) return; // já travou
