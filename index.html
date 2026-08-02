@@ -5,10 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Estudo PSS SEDUC-SP 2027 — Portal da Aline</title>
 <style>
-  :root{
-    --bg:#0d1117; --bg-soft:#161b22; --card:#1c2330; --accent:#3fb6ff; --accent2:#7c5cff;
-    --text:#e6edf3; --muted:#9aa7b5; --green:#3fb950; --radius:16px;
-  }
+  :root{--bg:#0d1117;--bg-soft:#161b22;--card:#1c2330;--accent:#3fb6ff;--accent2:#7c5cff;
+    --text:#e6edf3;--muted:#9aa7b5;--green:#3fb950;--radius:16px}
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     background:linear-gradient(160deg,#0d1117,#0f1622 60%,#121829);color:var(--text);line-height:1.65;
@@ -20,12 +18,16 @@
     color:var(--accent2);border:1px solid rgba(124,92,255,.4);padding:6px 14px;border-radius:999px;margin-bottom:20px}
   .logo{font-size:2.6rem;font-weight:800;letter-spacing:-.02em;margin-bottom:10px}
   .logo span{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
-  .hero p.lead{font-size:1.15rem;color:var(--muted);max-width:640px;margin:0 auto}
+  .hero p.lead{font-size:1.15rem;color:var(--muted);max-width:660px;margin:0 auto}
   .heart{color:#ff6b9d}
   section{padding:40px 0;border-top:1px solid rgba(255,255,255,.06)}
   h2{font-size:1.6rem;margin-bottom:8px}
   h2 .num{color:var(--accent);font-weight:800;margin-right:10px}
   .sub{color:var(--muted);margin-bottom:24px}
+  .facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-top:8px}
+  .fact{background:var(--bg-soft);border-radius:12px;padding:16px;border:1px solid rgba(255,255,255,.06)}
+  .fact .k{color:var(--muted);font-size:.78rem;text-transform:uppercase;letter-spacing:.05em}
+  .fact .v{font-size:1.1rem;font-weight:700;margin-top:4px}
   .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
   .card{background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);
     padding:22px;transition:transform .15s ease,border-color .15s ease}
@@ -35,19 +37,15 @@
   .card p{color:var(--muted);font-size:.92rem;margin-bottom:12px}
   .card a{color:var(--accent);text-decoration:none;font-weight:600}
   .card a:hover{text-decoration:underline}
-  .facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:8px}
-  .fact{background:var(--bg-soft);border-radius:12px;padding:16px;border:1px solid rgba(255,255,255,.06)}
-  .fact .k{color:var(--muted);font-size:.8rem;text-transform:uppercase;letter-spacing:.05em}
-  .fact .v{font-size:1.15rem;font-weight:700;margin-top:4px}
-  .fact .v small{font-weight:400;color:var(--muted);font-size:.85rem}
   .note{background:linear-gradient(135deg,rgba(63,185,80,.12),rgba(63,182,255,.1));
     border-radius:var(--radius);padding:24px;font-size:1rem;border:1px solid rgba(63,185,80,.25)}
-  .pill{display:inline-block;background:rgba(63,185,80,.15);color:var(--green);
-    border:1px solid rgba(63,185,80,.3);padding:3px 10px;border-radius:999px;font-size:.8rem;margin-left:8px}
+  .bloco1{background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);padding:22px;margin-top:8px}
+  .bloco1 h3{font-size:1.15rem;margin-bottom:8px}
+  .bloco1 p{color:var(--muted);margin-bottom:14px}
+  .bloco1 a{color:var(--accent);text-decoration:none;font-weight:600;display:block;padding:6px 0}
+  .bloco1 a:hover{text-decoration:underline}
   footer{text-align:center;padding:40px 20px;color:var(--muted);font-size:.9rem}
   footer a{color:var(--accent);text-decoration:none}
-  .progress{height:8px;background:var(--bg-soft);border-radius:999px;overflow:hidden;margin-top:10px}
-  .progress span{display:block;height:100%;width:35%;background:linear-gradient(90deg,var(--accent),var(--accent2))}
 </style>
 </head>
 <body>
@@ -62,8 +60,13 @@
 
 <section>
   <div class="wrap">
-    <h2><span class="num">📌</span>Edital em números</h2>
-    <p class="sub">Resumo rápido do certame (Edital de Abertura — Educação Básica 2027).</p>
+    <h2><span class="num">📌</span>O que é este edital (resumo simples)</h2>
+    <p class="sub">Edital de Abertura — Processo Seletivo Simplificado (PSS) para contratação temporária de docentes da Educação Básica, ano letivo 2027.</p>
+    <p style="color:var(--text);margin-bottom:18px">
+      É um <b>cadastro de reserva</b> regional: quem passa fica disponível para ser chamado conforme a necessidade das escolas estaduais.
+      A seleção tem <b>3 etapas</b>: Prova Objetiva (eliminatória e classificatória), Prova Prática (videoaula — eliminatória e classificatória) e Avaliação de Títulos (só classificatória).
+      Nesta página focamos no estudo da <b>Prova Objetiva</b>, começando pelo <b>Bloco 1</b>.
+    </p>
     <div class="facts">
       <div class="fact"><div class="k">Órgão</div><div class="v">SEDUC-SP</div></div>
       <div class="fact"><div class="k">Execução</div><div class="v">FGV</div></div>
@@ -75,54 +78,43 @@
       <div class="fact"><div class="k">Mínimo p/ passar</div><div class="v">8 acertos</div></div>
     </div>
     <p class="sub" style="margin-top:18px">
-      A prova objetiva tem <b>40 questões</b>: <b>10</b> de Conhecimentos Gerais e Didáticos-Pedagógicos (Bloco 1) +
-      <b>30</b> de Conhecimentos Específicos — Ciências (Bloco 2). Há também Prova Prática (videoaula) e Avaliação de Títulos.
+      A Prova Objetiva tem <b>40 questões</b>: <b>10</b> de Conhecimentos Gerais e Didáticos-Pedagógicos (Bloco 1, baseado em 3 livros) +
+      <b>30</b> de Conhecimentos Específicos — Ciências (Bloco 2).
     </p>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <h2><span class="num">📚</span>Materiais de estudo</h2>
-    <p class="sub">Clique para abrir cada resumo.</p>
-    <div class="cards">
-      <div class="card">
-        <div class="ico">🟦</div>
-        <h3>Bloco 1 — Resumo enxuto</h3>
-        <p>1 parágrafo por livro (Lemov, Libâneo, Nelsen). Leitura rápida de revisão.</p>
-        <a href="resumo-bloco1.html">Abrir resumo →</a>
-      </div>
-      <div class="card">
-        <div class="ico">🟦</div>
-        <h3>Bloco 1 — Guia profundo</h3>
-        <p>As 17 técnicas do Lemov detalhadas, mapa mental, autoteste e cronograma de 2 semanas.</p>
-        <a href="resumo-bloco1-profundo.html">Abrir guia →</a>
-      </div>
-      <div class="card">
-        <div class="ico">🟩</div>
-        <h3>Bloco 2 — Ciências</h3>
-        <p>Conteúdo programático de Ciências (Biologia, Física, Química e geral) — em breve.</p>
-        <span style="color:var(--muted)">Em preparo…</span>
-      </div>
-      <div class="card">
-        <div class="ico">🃏</div>
-        <h3>Flashcards & Simulado</h3>
-        <p>Questões no estilo FGV e revisão rápida — em breve.</p>
-        <span style="color:var(--muted)">Em preparo…</span>
-      </div>
+    <h2><span class="num">🟦</span>Bloco 1 — Conhecimentos Gerais e Didáticos-Pedagógicos</h2>
+    <p class="sub">São 10 das 40 questões da objetiva (25% da prova). Baseado em 3 obras. Clique em cada livro para o resumo aprofundado + auto-teste.</p>
+    <div class="bloco1">
+      <h3>📕 Lemov — <i>Aula nota 10 3.0</i></h3>
+      <p>Gestão de sala de aula através de 63 técnicas. O edital cobra 17 delas. É ~70% do Bloco 1.</p>
+      <a href="livro-lemov.html">→ Resumo aprofundado + auto-teste</a>
+      <h3 style="margin-top:14px">📗 Libâneo — <i>Adeus professor, adeus professora?</i></h3>
+      <p>A transformação da profissão docente: do transmissor ao mediador, trabalho coletivo e inclusão.</p>
+      <a href="livro-libaneo.html">→ Resumo aprofundado + auto-teste</a>
+      <h3 style="margin-top:14px">📘 Nelsen — <i>Disciplina Positiva em Sala de Aula</i></h3>
+      <p>Disciplina por respeito mútuo e cooperação, visando a autodisciplina do aluno.</p>
+      <a href="livro-nelsen.html">→ Resumo aprofundado + auto-teste</a>
+    </div>
+    <div class="note" style="margin-top:18px">
+      <b>Dica de estudo para a Aline:</b> comece pelo <b>Lemov</b> (vale a maior parte do Bloco 1 e é o mais "decorável").
+      Decore as 17 técnicas associando <b>número → conceito</b>. Cada página tem um auto-teste no final para testar o que você estudou.
     </div>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <h2><span class="num">🎯</span>Progresso do portal</h2>
-    <p class="sub">Conforme formos montando o conteúdo.</p>
-    <div class="progress"><span></span></div>
-    <p class="sub" style="margin-top:8px">Bloco 1 completo · Bloco 2 e simulados em construção.</p>
-    <div class="note">
-      <b>Dica de estudo para a Aline:</b> comece pelo <b>Bloco 1</b> (vale 25% da prova e é o mais "decorável").
-      Decore as 17 técnicas do Lemov associando <b>número → conceito</b>. Depois partimos para o Bloco 2 de Ciências.
+    <h2><span class="num">🟩</span>Próximos passos</h2>
+    <p class="sub">Conforme avançarmos nos estudos:</p>
+    <div class="cards">
+      <div class="card"><div class="ico">🟩</div><h3>Bloco 2 — Ciências</h3>
+        <p>Biologia, Física, Química e eixo geral — em breve.</p><span style="color:var(--muted)">Em preparo…</span></div>
+      <div class="card"><div class="ico">🃏</div><h3>Simulado geral</h3>
+        <p>Questões no estilo FGV reunindo Bloco 1 + Bloco 2 — em breve.</p><span style="color:var(--muted)">Em preparo…</span></div>
     </div>
   </div>
 </section>
