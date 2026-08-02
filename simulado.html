@@ -44,6 +44,7 @@ footer{text-align:center;padding:30px 20px;color:var(--muted);font-size:.85rem}
 
 <div class="resultbar">
   <button class="btn" id="verResultado" disabled>Ver meu resultado (0/15)</button>
+  <button class="btn" id="reiniciar" style="display:none;background:#444;color:#fff;margin-left:10px">🔄 Reiniciar</button>
   <div class="score" id="score"></div>
 </div>
 </div>
@@ -103,6 +104,7 @@ const quiz = document.getElementById('quiz');
 const verBtn = document.getElementById('verResultado');
 const scoreBox = document.getElementById('score');
 
+function construir() {
 questoes.forEach((q, qi) => {
   const div = document.createElement('div');
   div.className = 'q';
@@ -121,6 +123,9 @@ questoes.forEach((q, qi) => {
   div.appendChild(ans);
   quiz.appendChild(div);
 });
+}
+
+construir();
 
 function responder(qi, oi, div, el) {
   if (respostas[qi] !== null) return; // já travou
@@ -157,6 +162,21 @@ verBtn.onclick = () => {
     <span style="color:var(--muted);font-size:.85rem">(Mínimo na objetiva real: 8 acertos para não ser eliminada)</span>`;
   scoreBox.style.display = 'block';
   scoreBox.scrollIntoView({behavior:'smooth'});
+  verBtn.style.display = 'none';
+  document.getElementById('reiniciar').style.display = 'inline-block';
+};
+
+document.getElementById('reiniciar').onclick = () => {
+  // reseta estado e reconstrói o quiz
+  respostas.fill(null);
+  quiz.innerHTML = '';
+  scoreBox.style.display = 'none';
+  scoreBox.innerHTML = '';
+  verBtn.style.display = 'inline-block';
+  document.getElementById('reiniciar').style.display = 'none';
+  construir();
+  atualizarProgresso();
+  window.scrollTo({top:0, behavior:'smooth'});
 };
 </script>
 <footer>Portal de estudos • PSS SEDUC-SP 2027 • Para a Aline ♥</footer>
