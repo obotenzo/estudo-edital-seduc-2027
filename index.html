@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estudo PSS SEDUC-SP 2027 — Portal da Aline</title>
+<style>
+  :root{
+    --bg:#0d1117; --bg-soft:#161b22; --card:#1c2330; --accent:#3fb6ff; --accent2:#7c5cff;
+    --text:#e6edf3; --muted:#9aa7b5; --green:#3fb950; --radius:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:linear-gradient(160deg,#0d1117,#0f1622 60%,#121829);color:var(--text);line-height:1.65;
+    -webkit-font-smoothing:antialiased}
+  .wrap{max-width:920px;margin:0 auto;padding:0 20px}
+  header.hero{text-align:center;padding:70px 20px 50px;
+    background:radial-gradient(circle at 50% 0%,rgba(124,92,255,.18),transparent 60%)}
+  .badge{display:inline-block;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--accent2);border:1px solid rgba(124,92,255,.4);padding:6px 14px;border-radius:999px;margin-bottom:20px}
+  .logo{font-size:2.6rem;font-weight:800;letter-spacing:-.02em;margin-bottom:10px}
+  .logo span{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p.lead{font-size:1.15rem;color:var(--muted);max-width:640px;margin:0 auto}
+  .heart{color:#ff6b9d}
+  section{padding:40px 0;border-top:1px solid rgba(255,255,255,.06)}
+  h2{font-size:1.6rem;margin-bottom:8px}
+  h2 .num{color:var(--accent);font-weight:800;margin-right:10px}
+  .sub{color:var(--muted);margin-bottom:24px}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
+  .card{background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);
+    padding:22px;transition:transform .15s ease,border-color .15s ease}
+  .card:hover{transform:translateY(-4px);border-color:rgba(63,182,255,.4)}
+  .card .ico{font-size:1.8rem;margin-bottom:10px}
+  .card h3{font-size:1.1rem;margin-bottom:6px}
+  .card p{color:var(--muted);font-size:.92rem;margin-bottom:12px}
+  .card a{color:var(--accent);text-decoration:none;font-weight:600}
+  .card a:hover{text-decoration:underline}
+  .facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:8px}
+  .fact{background:var(--bg-soft);border-radius:12px;padding:16px;border:1px solid rgba(255,255,255,.06)}
+  .fact .k{color:var(--muted);font-size:.8rem;text-transform:uppercase;letter-spacing:.05em}
+  .fact .v{font-size:1.15rem;font-weight:700;margin-top:4px}
+  .fact .v small{font-weight:400;color:var(--muted);font-size:.85rem}
+  .note{background:linear-gradient(135deg,rgba(63,185,80,.12),rgba(63,182,255,.1));
+    border-radius:var(--radius);padding:24px;font-size:1rem;border:1px solid rgba(63,185,80,.25)}
+  .pill{display:inline-block;background:rgba(63,185,80,.15);color:var(--green);
+    border:1px solid rgba(63,185,80,.3);padding:3px 10px;border-radius:999px;font-size:.8rem;margin-left:8px}
+  footer{text-align:center;padding:40px 20px;color:var(--muted);font-size:.9rem}
+  footer a{color:var(--accent);text-decoration:none}
+  .progress{height:8px;background:var(--bg-soft);border-radius:999px;overflow:hidden;margin-top:10px}
+  .progress span{display:block;height:100%;width:35%;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="badge">Portal de Estudos</span>
+    <div class="logo">PSS SEDUC-SP <span>2027</span></div>
+    <p class="lead">Material de estudo para a <b>Aline</b> <span class="heart">♥</span> — processo seletivo para professora de Ciências da rede estadual de SP.</p>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <h2><span class="num">📌</span>Edital em números</h2>
+    <p class="sub">Resumo rápido do certame (Edital de Abertura — Educação Básica 2027).</p>
+    <div class="facts">
+      <div class="fact"><div class="k">Órgão</div><div class="v">SEDUC-SP</div></div>
+      <div class="fact"><div class="k">Execução</div><div class="v">FGV</div></div>
+      <div class="fact"><div class="k">Disciplina</div><div class="v">Ciências</div></div>
+      <div class="fact"><div class="k">Prova objetiva</div><div class="v">16/08/2026</div></div>
+      <div class="fact"><div class="k">Inscrições</div><div class="v">18/05 a 25/06/2026</div></div>
+      <div class="fact"><div class="k">Taxa</div><div class="v">R$ 60,00</div></div>
+      <div class="fact"><div class="k">Subsídio 40h</div><div class="v">R$ 5.565,00</div></div>
+      <div class="fact"><div class="k">Mínimo p/ passar</div><div class="v">8 acertos</div></div>
+    </div>
+    <p class="sub" style="margin-top:18px">
+      A prova objetiva tem <b>40 questões</b>: <b>10</b> de Conhecimentos Gerais e Didáticos-Pedagógicos (Bloco 1) +
+      <b>30</b> de Conhecimentos Específicos — Ciências (Bloco 2). Há também Prova Prática (videoaula) e Avaliação de Títulos.
+    </p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2><span class="num">📚</span>Materiais de estudo</h2>
+    <p class="sub">Clique para abrir cada resumo.</p>
+    <div class="cards">
+      <div class="card">
+        <div class="ico">🟦</div>
+        <h3>Bloco 1 — Resumo enxuto</h3>
+        <p>1 parágrafo por livro (Lemov, Libâneo, Nelsen). Leitura rápida de revisão.</p>
+        <a href="resumo-bloco1.html">Abrir resumo →</a>
+      </div>
+      <div class="card">
+        <div class="ico">🟦</div>
+        <h3>Bloco 1 — Guia profundo</h3>
+        <p>As 17 técnicas do Lemov detalhadas, mapa mental, autoteste e cronograma de 2 semanas.</p>
+        <a href="resumo-bloco1-profundo.html">Abrir guia →</a>
+      </div>
+      <div class="card">
+        <div class="ico">🟩</div>
+        <h3>Bloco 2 — Ciências</h3>
+        <p>Conteúdo programático de Ciências (Biologia, Física, Química e geral) — em breve.</p>
+        <span style="color:var(--muted)">Em preparo…</span>
+      </div>
+      <div class="card">
+        <div class="ico">🃏</div>
+        <h3>Flashcards & Simulado</h3>
+        <p>Questões no estilo FGV e revisão rápida — em breve.</p>
+        <span style="color:var(--muted)">Em preparo…</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2><span class="num">🎯</span>Progresso do portal</h2>
+    <p class="sub">Conforme formos montando o conteúdo.</p>
+    <div class="progress"><span></span></div>
+    <p class="sub" style="margin-top:8px">Bloco 1 completo · Bloco 2 e simulados em construção.</p>
+    <div class="note">
+      <b>Dica de estudo para a Aline:</b> comece pelo <b>Bloco 1</b> (vale 25% da prova e é o mais "decorável").
+      Decore as 17 técnicas do Lemov associando <b>número → conceito</b>. Depois partimos para o Bloco 2 de Ciências.
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    Portal de estudos • PSS SEDUC-SP 2027 • Feito com carinho para a Aline <span class="heart">♥</span><br>
+    Conteúdo baseado no edital oficial (Educação Básica 2027). Sem vínculo com a SEDUC/FGV.
+  </div>
+</footer>
+
+</body>
+</html>
