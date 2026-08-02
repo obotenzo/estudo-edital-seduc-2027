@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Simulado PSS SEDUC-SP 2027 | Estilo FGV</title>
 <style>
-:root{--bg:#0d1117;--text:#e6edf3;--muted:#9aa7b5;--accent:#ffb020}
+:root{--bg:#0d1117;--text:#e6edf3;--muted:#9aa7b5;--accent:#ffb020;--green:#3fb950;--red:#ff6b6b}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;padding:40px 20px}
 .wrap{max-width:800px;margin:0 auto}
@@ -19,12 +19,17 @@ h1{font-size:2.1rem;margin-bottom:6px;color:#fff}h1 span{color:var(--accent)}
 .b1{background:rgba(63,182,255,.18);color:#6cc6ff;border:1px solid rgba(63,182,255,.4)}
 .b2{background:rgba(63,185,80,.18);color:#7be08f;border:1px solid rgba(63,185,80,.4)}
 .q .enun{color:var(--text);font-weight:500;margin-bottom:10px}
-.opt{display:block;background:#0d1117;border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:9px 12px;margin-bottom:6px;color:var(--muted);cursor:default}
-.opt.certa{color:#7be08f}
+.opt{display:block;background:#0d1117;border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:9px 12px;margin-bottom:6px;color:var(--muted);cursor:pointer;transition:background .15s,border-color .15s}
+.opt:hover{border-color:rgba(255,176,32,.5)}
+.opt.certa{background:rgba(63,185,80,.18);border-color:var(--green);color:#cfe9d4}
+.opt.errada{background:rgba(255,107,107,.15);border-color:var(--red);color:#ffd5d5}
+.opt.bloq{cursor:default;pointer-events:none}
 .ans{display:none;margin-top:8px;padding:10px 14px;background:rgba(63,185,80,.1);border-left:3px solid #3fb950;color:#cdd9e5;border-radius:6px;font-size:.92rem}
-button{background:var(--accent);color:#06121f;border:none;padding:7px 13px;border-radius:8px;font-weight:700;cursor:pointer;font-size:.82rem;margin-top:4px}
-button:hover{opacity:.9}
-.score{margin-top:26px;background:var(--card);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:18px;text-align:center;font-size:1.1rem}
+.resultbar{position:sticky;bottom:0;background:var(--bg-soft);border-top:1px solid rgba(255,255,255,.12);padding:16px;text-align:center;margin-top:20px}
+.btn{background:linear-gradient(90deg,#ffb020,#ffd479);color:#06121f;border:none;padding:13px 26px;border-radius:10px;font-weight:800;cursor:pointer;font-size:1.02rem}
+.btn:disabled{opacity:.4;cursor:not-allowed;background:#444}
+.score{margin-top:10px;background:var(--card);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:18px;text-align:center;font-size:1.15rem;display:none}
+.score .pct{font-size:2rem;font-weight:800;color:var(--accent)}
 footer{text-align:center;padding:30px 20px;color:var(--muted);font-size:.85rem}
 </style>
 </head>
@@ -33,147 +38,127 @@ footer{text-align:center;padding:30px 20px;color:var(--muted);font-size:.85rem}
 <a class="back" href="index.html">← Voltar ao portal</a>
 <h1>Simulado <span>FGV</span></h1>
 <p class="meta">Estilo da prova objetiva do PSS SEDUC-SP 2027 (Ciências).</p>
-<div class="aviso">📝 <b>Como fazer:</b> leia e escolha a alternativa. Clique em <b>"Ver gabarito"</b> em cada questão para conferir a resposta e a explicação. São 15 questões (5 do Bloco 1 pedagógico + 10 do Bloco 2 Ciências), na proporção real da prova (10/30).</div>
+<div class="aviso">📝 <b>Como funciona:</b> clique na alternativa que achar correta. A questão <b>trava</b>, mostra a resposta certa (verde) e a explicação. Ao responder <b>todas as 15</b>, clique em "Ver meu resultado" para ver seu percentual de acertos. Em branco conta como erro.</div>
 
-<!-- BLOCO 1 -->
-<div class="q"><div class="topo"><span class="bloco b1">BLOCO 1</span></div>
-<div class="enun">1. (Pedagógico) No livro <i>Aula nota 10 3.0</i>, a técnica que orienta o professor a aguardar alguns segundos de silêncio após fazer uma pergunta, para incluir mais alunos, é:</div>
-<span class="opt">a) Técnica 12 — Cultura do erro</span>
-<span class="opt certa">b) Técnica 33 — Tempo de espera</span>
-<span class="opt">c) Técnica 43 — Virem e conversem</span>
-<span class="opt">d) Técnica 6 — Substitua o autorrelato</span>
-<button onclick="this.nextElementSibling.style.display='block'">Ver gabarito</button>
-<div class="ans"><b>Gabarito: b.</b> A Técnica 33 (wait time) propõe o silêncio após a pergunta para dar tempo de processamento e engajar mais alunos.</div></div>
+<div id="quiz"></div>
 
-<div class="q"><div class="topo"><span class="bloco b1">BLOCO 1</span></div>
-<div class="enun">2. (Pedagógico) Segundo José Carlos Libâneo, a nova função central do professor na contemporaneidade é melhor descrita como:</div>
-<span class="opt">a) O único detentor do saber, que transmite conteúdo pronto</span>
-<span class="opt certa">b) Um mediador da aprendizagem, que atua com autonomia e de forma coletiva</span>
-<span class="opt">c) Um fiscal de disciplina, com foco em punições</span>
-<span class="opt">d) Um mero aplicador de provas padronizadas</span>
-<button onclick="this.nextElementSibling.style.display='block'">Ver gabarito</button>
-<div class="ans"><b>Gabarito: b.</b> Libâneo defende a passagem do professor "transmissor" para o "mediador", integrado ao trabalho coletivo e ao projeto político-pedagógico.</div></div>
-
-<div class="q"><div class="topo"><span class="bloco b1">BLOCO 1</span></div>
-<div class="enun">3. (Pedagógico) Na Disciplina Positiva (Nelsen), o objetivo de longo prazo da convivência em sala é a:</div>
-<span class="opt">a) Obedience cega ao professor</span>
-<span class="opt certa">b) Autodisciplina do aluno, construída sobre respeito mútuo</span>
-<span class="opt">c) Aprovação em provas padronizadas</span>
-<span class="opt">d) Eliminação de todas as regras</span>
-<button onclick="this.nextElementSibling.style.display='block'">Ver gabarito</button>
-<div class="ans"><b>Gabarito: b.</b> A disciplina positiva ensina o comportamento visando a autodisciplina, não o medo da punição.</div></div>
-
-<div class="q"><div class="topo"><span class="bloco b1">BLOCO 1</span></div>
-<div class="enun">4. (Pedagógico) A técnica do Lemov que determina não aceitar resposta vaga e insistir no esforço do aluno, com apoio, denomina-se:</div>
-<span class="opt">a) Certo é certo</span>
-<span class="opt">b) Arremate</span>
-<span class="opt certa">c) Sem escapatória</span>
-<span class="opt">d) Puxe mais</span>
-<button onclick="this.nextElementSibling.style.display='block'">Ver gabarito</button>
-<div class="ans"><b>Gabarito: c.</b> Técnica 15 — "Sem escapatória": não aceita "não sei" sem que o aluno faça uma tentativa apoiada.</div></div>
-
-<div class="q"><div class="topo"><span class="bloco b1">BLOCO 1</span></div>
-<div class="enun">5. (Pedagógico) "Elogiar o esforço específico em vez de dizer 'bom trabalho' de forma genérica" refere-se a qual técnica?</div>
-<span class="opt">a) Técnica 52 — O que fazer</span>
-<span class="opt">b) Técnica 54 — Expectativas visíveis</span>
-<span class="opt">c) Técnica 59 — Discurso positivo</span>
-<span class="opt certa">d) Técnica 60 — Elogio preciso</span>
-<button onclick="this.nextElementSibling.style.display='block'">Ver gabarito</button>
-<div class="ans"><b>Gabarito: d.</b> Técnica 60 valoriza o elogio específico (ex.: "você justificou o erro"), que ensina o que repetir.</div></div>
-
-<!-- BLOCO 2 -->
-<div class="q"><div class="topo"><span class="bloco b2">BLOCO 2</span></div>
-<div class="enun">6. (Ciências) A diferença fundamental entre transformação física e química da matéria é que, na química, há:</div>
-<span class="opt certa">a) Formação de novas substâncias</span>
-<span class="opt">b) Apenas mudança de estado físico</span>
-<span class="opt">c) Alteração apenas da temperatura</span>
-<span class="opt">d) Nenhuma mudança de propriedades</span>
-<button onclick="this.nextElementSibling.style.display='block'">Ver gabarito</button>
-<div class="ans"><b>Gabarito: a.</b> Transformação química produz novas substâncias; a física apenas muda forma/estado, sem alterar a composição.</div></div>
-
-<div class="q"><div class="topo"><span class="bloco b2">BLOCO 2</span></div>
-<div class="enun">7. (Biologia) A fotossíntese pode ser representada pela equação:</div>
-<span class="opt">a) C₆H₁₂O₆ + 6 O₂ → 6 CO₂ + 6 H₂O</span>
-<span class="opt certa">b) 6 CO₂ + 6 H₂O + luz → C₆H₁₂O₆ + 6 O₂</span>
-<span class="opt">c) 2 H₂ + O₂ → 2 H₂O</span>
-<span class="opt">d) N₂ + 3 H₂ → 2 NH₃</span>
-<button onclick="this.nextElementSibling.style.display='block'">Ver gabarito</button>
-<div class="ans"><b>Gabarito: b.</b> Plantas convertem CO₂ e água em glicose e O₂, com energia luminosa (clorofila).</div></div>
-
-<div class="q"><div class="topo"><span class="bloco b2">BLOCO 2</span></div>
-<div class="enun">8. (Biologia) A biomagnificação refere-se ao:</div>
-<span class="opt">a) Crescimento das populações de uma espécie</span>
-<span class="opt certa">b) Aumento da concentração de uma substância tóxica ao longo da cadeia alimentar</span>
-<span class="opt">c) Redução da biodiversidade por desmatamento</span>
-<span class="opt">d) Processo de fotossíntese em cadeia</span>
-<button onclick="this.nextElementSibling.style.display='block'">Ver gabarito</button>
-<div class="ans"><b>Gabarito: b.</b> Ex.: mercúrio e DDT acumulam e concentram nos níveis tróficos superiores.</div></div>
-
-<div class="q"><div class="topo"><span class="bloco b2">BLOCO 2</span></div>
-<div class="enun">9. (Física) Segundo a 2ª Lei de Newton, a força resultante sobre um corpo é:</div>
-<span class="opt">a) Igual ao seu volume</span>
-<span class="opt certa">b) Igual à massa vezes a aceleração (F = m·a)</span>
-<span class="opt">c) Inversamente proporcional à massa</span>
-<span class="opt">d) Independente da aceleração</span>
-<button onclick="this.nextElementSibling.style.display='block'">Ver gabarito</button>
-<div class="ans"><b>Gabarito: b.</b> F = m·a relaciona força, massa e aceleração.</div></div>
-
-<div class="q"><div class="topo"><span class="bloco b2">BLOCO 2</span></div>
-<div class="enun">10. (Física) O Princípio de Arquimedes afirma que o empuxo sobre um corpo submerso é igual:</div>
-<span class="opt certa">a) Ao peso do fluido deslocado</span>
-<span class="opt">b) Ao seu próprio peso</span>
-<span class="opt">c) À sua densidade</span>
-<span class="opt">d) À temperatura do fluido</span>
-<button onclick="this.nextElementSibling.style.display='block'">Ver gabarito</button>
-<div class="ans"><b>Gabarito: a.</b> Empuxo = peso do volume de fluido deslocado (explica por que objetos flutuam).</div></div>
-
-<div class="q"><div class="topo"><span class="bloco b2">BLOCO 2</span></div>
-<div class="enun">11. (Física) No efeito fotoelétrico, a luz incidente sobre um metal provoca:</div>
-<span class="opt">a) Apenas aquecimento</span>
-<span class="opt certa">b) A liberação de elétrons (natureza quântica da luz)</span>
-<span class="opt">c) Reflexão total</span>
-<span class="opt">d) Formação de ímãs</span>
-<button onclick="this.nextElementSibling.style.display='block'">Ver gabarito</button>
-<div class="ans"><b>Gabarito: b.</b> Fótons de luz incidente arrancam elétrons do metal — base da física quântica (Einstein).</div></div>
-
-<div class="q"><div class="topo"><span class="bloco b2">BLOCO 2</span></div>
-<div class="enun">12. (Química) A ligação iônica forma-se por:</div>
-<span class="opt certa">a) Transferência de elétrons entre átomos (ex.: metal + não metal)</span>
-<span class="opt">b) Compartilhamento de elétrons</span>
-<span class="opt">c) Atração gravitacional</span>
-<span class="opt">d) Fusão nuclear</span>
-<button onclick="this.nextElementSibling.style.display='block'">Ver gabarito</button>
-<div class="ans"><b>Gabarito: a.</b> Íons opostos atraem-se (ex.: Na⁺Cl⁻). Covalente seria o compartilhamento.</div></div>
-
-<div class="q"><div class="topo"><span class="bloco b2">BLOCO 2</span></div>
-<div class="enun">13. (Química) As propriedades coligativas, como ebulioscopia e crioscopia, dependem:</div>
-<span class="opt">a) Da natureza química do soluto</span>
-<span class="opt certa">b) Apenas da quantidade de partículas dissolvidas</span>
-<span class="opt">c) Da cor da solução</span>
-<span class="opt">d) Do volume do recipiente</span>
-<button onclick="this.nextElementSibling.style.display='block'">Ver gabarito</button>
-<div class="ans"><b>Gabarito: b.</b> Propriedades coligativas dependem do número de partículas, não da identidade do soluto.</div></div>
-
-<div class="q"><div class="topo"><span class="bloco b2">BLOCO 2</span></div>
-<div class="enun">14. (Química) Uma reação que libera calor para o meio é classificada como:</div>
-<span class="opt certa">a) Exotérmica</span>
-<span class="opt">b) Endotérmica</span>
-<span class="opt">c) Nuclear</span>
-<span class="opt">d) Fisica</span>
-<button onclick="this.nextElementSibling.style.display='block'">Ver gabarito</button>
-<div class="ans"><b>Gabarito: a.</b> Exotérmica libera energia (calor); endotérmica absorve.</div></div>
-
-<div class="q"><div class="topo"><span class="bloco b2">BLOCO 2</span></div>
-<div class="enun">15. (Ciências/Eixo geral) As estações do ano na Terra são causadas, principalmente, por:</div>
-<span class="opt">a) A distância variável ao Sol ao longo do ano</span>
-<span class="opt certa">b) A inclinação do eixo de rotação e o movimento de translação</span>
-<span class="opt">c) As fases da Lua</span>
-<span class="opt">d) A rotação da Lua em torno da Terra</span>
-<button onclick="this.nextElementSibling.style.display='block'">Ver gabarito</button>
-<div class="ans"><b>Gabarito: b.</b> A inclinação do eixo (~23,5°) + translação explicam o ciclo das estações.</div></div>
-
-<div class="score">✅ Simulado concluído! Revisite as questões que errou nos resumos dos blocos 1 e 2. <b>Dica:</b> mínimo de 8 acertos na objetiva real para não ser eliminada.</div>
+<div class="resultbar">
+  <button class="btn" id="verResultado" disabled>Ver meu resultado (0/15)</button>
+  <div class="score" id="score"></div>
 </div>
+</div>
+
+<script>
+const questoes = [
+ {bloco:"b1", tipo:"BLOCO 1", txt:"1. (Pedagógico) No livro Aula nota 10 3.0, a técnica que orienta o professor a aguardar alguns segundos de silêncio após fazer uma pergunta, para incluir mais alunos, é:",
+  opts:["a) Técnica 12 — Cultura do erro","b) Técnica 33 — Tempo de espera","c) Técnica 43 — Virem e conversem","d) Técnica 6 — Substitua o autorrelato"],
+  certa:1, exp:"Técnica 33 (wait time): o silêncio após a pergunta dá tempo de processamento e engaja mais alunos."},
+ {bloco:"b1", tipo:"BLOCO 1", txt:"2. (Pedagógico) Segundo José Carlos Libâneo, a nova função central do professor na contemporaneidade é melhor descrita como:",
+  opts:["a) O único detentor do saber, que transmite conteúdo pronto","b) Um mediador da aprendizagem, que atua com autonomia e de forma coletiva","c) Um fiscal de disciplina, com foco em punições","d) Um mero aplicador de provas padronizadas"],
+  certa:1, exp:"Libâneo defende a passagem do professor 'transmissor' para o 'mediador', integrado ao trabalho coletivo e ao PPP."},
+ {bloco:"b1", tipo:"BLOCO 1", txt:"3. (Pedagógico) Na Disciplina Positiva (Nelsen), o objetivo de longo prazo da convivência em sala é a:",
+  opts:["a) Obediência cega ao professor","b) Autodisciplina do aluno, construída sobre respeito mútuo","c) Aprovação em provas padronizadas","d) Eliminação de todas as regras"],
+  certa:1, exp:"A disciplina positiva ensina o comportamento visando a autodisciplina, não o medo da punição."},
+ {bloco:"b1", tipo:"BLOCO 1", txt:"4. (Pedagógico) A técnica do Lemov que determina não aceitar resposta vaga e insistir no esforço do aluno, com apoio, denomina-se:",
+  opts:["a) Certo é certo","b) Arremate","c) Sem escapatória","d) Puxe mais"],
+  certa:2, exp:"Técnica 15 — 'Sem escapatória': não aceita 'não sei' sem que o aluno faça uma tentativa apoiada."},
+ {bloco:"b1", tipo:"BLOCO 1", txt:"5. (Pedagógico) 'Elogiar o esforço específico em vez de dizer bom trabalho de forma genérica' refere-se a qual técnica?",
+  opts:["a) Técnica 52 — O que fazer","b) Técnica 54 — Expectativas visíveis","c) Técnica 59 — Discurso positivo","d) Técnica 60 — Elogio preciso"],
+  certa:3, exp:"Técnica 60 valoriza o elogio específico (ex.: 'você justificou o erro'), que ensina o que repetir."},
+
+ {bloco:"b2", tipo:"BLOCO 2", txt:"6. (Ciências) A diferença fundamental entre transformação física e química da matéria é que, na química, há:",
+  opts:["a) Formação de novas substâncias","b) Apenas mudança de estado físico","c) Alteração apenas da temperatura","d) Nenhuma mudança de propriedades"],
+  certa:0, exp:"Transformação química produz novas substâncias; a física apenas muda forma/estado, sem alterar a composição."},
+ {bloco:"b2", tipo:"BLOCO 2", txt:"7. (Biologia) A fotossíntese pode ser representada pela equação:",
+  opts:["a) C₆H₁₂O₆ + 6 O₂ → 6 CO₂ + 6 H₂O","b) 6 CO₂ + 6 H₂O + luz → C₆H₁₂O₆ + 6 O₂","c) 2 H₂ + O₂ → 2 H₂O","d) N₂ + 3 H₂ → 2 NH₃"],
+  certa:1, exp:"Plantas convertem CO₂ e água em glicose e O₂, com energia luminosa (clorofila)."},
+ {bloco:"b2", tipo:"BLOCO 2", txt:"8. (Biologia) A biomagnificação refere-se ao:",
+  opts:["a) Crescimento das populações de uma espécie","b) Aumento da concentração de uma substância tóxica ao longo da cadeia alimentar","c) Redução da biodiversidade por desmatamento","d) Processo de fotossíntese em cadeia"],
+  certa:1, exp:"Ex.: mercúrio e DDT acumulam e concentram nos níveis tróficos superiores."},
+ {bloco:"b2", tipo:"BLOCO 2", txt:"9. (Física) Segundo a 2ª Lei de Newton, a força resultante sobre um corpo é:",
+  opts:["a) Igual ao seu volume","b) Igual à massa vezes a aceleração (F = m·a)","c) Inversamente proporcional à massa","d) Independente da aceleração"],
+  certa:1, exp:"F = m·a relaciona força, massa e aceleração."},
+ {bloco:"b2", tipo:"BLOCO 2", txt:"10. (Física) O Princípio de Arquimedes afirma que o empuxo sobre um corpo submerso é igual:",
+  opts:["a) Ao peso do fluido deslocado","b) Ao seu próprio peso","c) À sua densidade","d) À temperatura do fluido"],
+  certa:0, exp:"Empuxo = peso do volume de fluido deslocado (explica por que objetos flutuam)."},
+ {bloco:"b2", tipo:"BLOCO 2", txt:"11. (Física) No efeito fotoelétrico, a luz incidente sobre um metal provoca:",
+  opts:["a) Apenas aquecimento","b) A liberação de elétrons (natureza quântica da luz)","c) Reflexão total","d) Formação de ímãs"],
+  certa:1, exp:"Fótons de luz incidente arrancam elétrons do metal — base da física quântica (Einstein)."},
+ {bloco:"b2", tipo:"BLOCO 2", txt:"12. (Química) A ligação iônica forma-se por:",
+  opts:["a) Transferência de elétrons entre átomos (ex.: metal + não metal)","b) Compartilhamento de elétrons","c) Atração gravitacional","d) Fusão nuclear"],
+  certa:0, exp:"Íons opostos atraem-se (ex.: Na⁺Cl⁻). Covalente seria o compartilhamento."},
+ {bloco:"b2", tipo:"BLOCO 2", txt:"13. (Química) As propriedades coligativas, como ebulioscopia e crioscopia, dependem:",
+  opts:["a) Da natureza química do soluto","b) Apenas da quantidade de partículas dissolvidas","c) Da cor da solução","d) Do volume do recipiente"],
+  certa:1, exp:"Propriedades coligativas dependem do número de partículas, não da identidade do soluto."},
+ {bloco:"b2", tipo:"BLOCO 2", txt:"14. (Química) Uma reação que libera calor para o meio é classificada como:",
+  opts:["a) Exotérmica","b) Endotérmica","c) Nuclear","d) Física"],
+  certa:0, exp:"Exotérmica libera energia (calor); endotérmica absorve."},
+ {bloco:"b2", tipo:"BLOCO 2", txt:"15. (Ciências/Eixo geral) As estações do ano na Terra são causadas, principalmente, por:",
+  opts:["a) A distância variável ao Sol ao longo do ano","b) A inclinação do eixo de rotação e o movimento de translação","c) As fases da Lua","d) A rotação da Lua em torno da Terra"],
+  certa:1, exp:"A inclinação do eixo (~23,5°) + translação explicam o ciclo das estações."}
+];
+
+const respostas = new Array(questoes.length).fill(null);
+const quiz = document.getElementById('quiz');
+const verBtn = document.getElementById('verResultado');
+const scoreBox = document.getElementById('score');
+
+questoes.forEach((q, qi) => {
+  const div = document.createElement('div');
+  div.className = 'q';
+  div.innerHTML = `<div class="topo"><span class="bloco ${q.bloco}">${q.tipo}</span></div>
+    <div class="enun">${q.txt}</div>`;
+  q.opts.forEach((op, oi) => {
+    const o = document.createElement('div');
+    o.className = 'opt';
+    o.textContent = op;
+    o.onclick = () => responder(qi, oi, div, o);
+    div.appendChild(o);
+  });
+  const ans = document.createElement('div');
+  ans.className = 'ans';
+  ans.id = 'ans-'+qi;
+  div.appendChild(ans);
+  quiz.appendChild(div);
+});
+
+function responder(qi, oi, div, el) {
+  if (respostas[qi] !== null) return; // já travou
+  respostas[qi] = oi;
+  const certaIdx = questoes[qi].certa;
+  const opts = div.querySelectorAll('.opt');
+  opts.forEach((o, i) => {
+    o.classList.add('bloq');
+    if (i === certaIdx) o.classList.add('certa');
+    else if (i === oi) o.classList.add('errada');
+  });
+  const ans = document.getElementById('ans-'+qi);
+  const acertou = (oi === certaIdx);
+  ans.innerHTML = `<b>${acertou ? '✅ Acertou!' : '❌ Errou.'}</b> ${questoes[qi].exp}`;
+  ans.style.display = 'block';
+  atualizarProgresso();
+}
+
+function atualizarProgresso() {
+  const feitas = respostas.filter(r => r !== null).length;
+  verBtn.textContent = `Ver meu resultado (${feitas}/${questoes.length})`;
+  verBtn.disabled = (feitas < questoes.length);
+}
+
+verBtn.onclick = () => {
+  const acertos = respostas.filter((r, i) => r === questoes[i].certa).length;
+  const pct = Math.round((acertos / questoes.length) * 100);
+  let msg;
+  if (pct >= 80) msg = "🏆 Excelente! Você está bem preparada.";
+  else if (pct >= 60) msg = "👍 Bom desempenho — revise os pontos que errou.";
+  else msg = "📚 Continue estudando os resumos dos blocos 1 e 2.";
+  scoreBox.innerHTML = `Você acertou <b>${acertos}</b> de <b>${questoes.length}</b> questões.<br>
+    <span class="pct">${pct}%</span><br><span style="color:var(--muted);font-size:.95rem">${msg}</span><br>
+    <span style="color:var(--muted);font-size:.85rem">(Mínimo na objetiva real: 8 acertos para não ser eliminada)</span>`;
+  scoreBox.style.display = 'block';
+  scoreBox.scrollIntoView({behavior:'smooth'});
+};
+</script>
 <footer>Portal de estudos • PSS SEDUC-SP 2027 • Para a Aline ♥</footer>
 </body>
 </html>
