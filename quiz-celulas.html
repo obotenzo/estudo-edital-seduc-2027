@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Quiz — Células (6º ano) | PSS SEDUC-SP 2027</title>
+<style>
+:root{--bg:#0d1117;--text:#e6edf3;--muted:#9aa7b5;--accent:#ffb020;--green:#3fb950;--red:#ff6b6b;--bg-soft:#161b22;--card:#161b22}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;padding:40px 20px}
+.wrap{max-width:800px;margin:0 auto}
+.back{display:inline-block;margin-bottom:24px;color:var(--accent);font-weight:600;text-decoration:none}
+h1{font-size:2.1rem;margin-bottom:6px;color:#fff}h1 span{color:var(--accent)}
+.meta{color:var(--muted);margin-bottom:8px;font-style:italic}
+.aviso{background:rgba(255,176,32,.1);border:1px solid rgba(255,176,32,.3);border-radius:12px;padding:14px;margin-bottom:24px;font-size:.95rem}
+.q{background:#161b22;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:16px;margin-bottom:14px}
+.q .topo{display:flex;gap:8px;align-items:center;margin-bottom:6px}
+.q .tema{font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:999px}
+.tA{background:rgba(124,92,255,.18);color:#b6a4ff;border:1px solid rgba(124,92,255,.4)}
+.tB{background:rgba(63,185,80,.18);color:#7be08f;border:1px solid rgba(63,185,80,.4)}
+.q .enun{color:var(--text);font-weight:500;margin-bottom:10px}
+.opt{display:block;background:#0d1117;border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:9px 12px;margin-bottom:6px;color:var(--muted);cursor:pointer;transition:background .15s,border-color .15s}
+.opt:hover{border-color:rgba(255,176,32,.5)}
+.opt.certa{background:rgba(63,185,80,.18);border-color:var(--green);color:#cfe9d4}
+.opt.errada{background:rgba(255,107,107,.15);border-color:var(--red);color:#ffd5d5}
+.opt.bloq{cursor:default;pointer-events:none}
+.ans{display:none;margin-top:8px;padding:10px 14px;background:rgba(63,185,80,.1);border-left:3px solid #3fb950;color:#cdd9e5;border-radius:6px;font-size:.92rem}
+.resultbar{position:sticky;bottom:0;background:var(--bg-soft);border-top:1px solid rgba(255,255,255,.12);padding:16px;text-align:center;margin-top:20px}
+.btn{background:linear-gradient(90deg,#ffb020,#ffd479);color:#06121f;border:none;padding:13px 26px;border-radius:10px;font-weight:800;cursor:pointer;font-size:1.02rem}
+.btn:disabled{opacity:.4;cursor:not-allowed;background:#444}
+.score{margin-top:10px;background:var(--card);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:18px;text-align:center;font-size:1.15rem;display:none}
+.score .pct{font-size:2rem;font-weight:800;color:var(--accent)}
+footer{text-align:center;padding:30px 20px;color:var(--muted);font-size:.85rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="bloco2-ciencias.html">← Voltar a Ciências</a>
+<h1>Quiz — <span>Células</span></h1>
+<p class="meta">Tipos de células (eucariontes e procariontes) e organelas da célula animal. Nível 6º ano (Anos Finais).</p>
+<div class="aviso">🔬 <b>Como funciona:</b> clique na alternativa que achar correta. A questão <b>trava</b>, mostra a certa (verde) e a explicação. Responda <b>todas as 15</b> e clique em "Ver meu resultado" para ver seu percentual. Em branco conta como erro. Baseado nas aulas oficiais da SEDUC-SP (Aulas 4 e 5).</div>
+
+<div id="quiz"></div>
+
+<div class="resultbar">
+  <button class="btn" id="verResultado" disabled>Ver meu resultado (0/15)</button>
+  <button class="btn" id="reiniciar" style="display:none;background:#444;color:#fff;margin-left:10px">🔄 Reiniciar</button>
+  <div class="score" id="score"></div>
+</div>
+</div>
+
+<script>
+const questoes = [
+ {tema:"tA", tag:"Tipos de célula", txt:"1. Células que têm o material genético dentro de um núcleo delimitado por membrana são chamadas de:",
+  opts:["a) Procariontes","b) Eucariontes","c) Virus","d) Plasmas"],
+  certa:1, exp:"Eucariontes (eu = verdadeiro, carion = núcleo): o DNA fica dentro do núcleo, separado por uma membrana (carioteca)."},
+ {tema:"tA", tag:"Tipos de célula", txt:"2. Bactérias e arqueias são exemplos de seres:",
+  opts:["a) Eucariontes","b) Procariontes","c) Pluricelulares com núcleo","d) Vegetais"],
+  certa:1, exp:"Procariontes (pro = antes; não têm membrana nuclear — o DNA fica disperso no citoplasma). Bactérias e arqueias são os únicos procariontes."},
+ {tema:"tA", tag:"Tipos de célula", txt:"3. Em uma célula procarionte, onde fica o material genético?",
+  opts:["a) Dentro do núcleo","b) Preso à membrana plasmática externa","c) Disperso no citoplasma","d) Dentro das mitocôndrias"],
+  certa:2, exp:"Nas procariontes não há núcleo: o material genético fica solto no citoplasma."},
+ {tema:"tA", tag:"Tipos de célula", txt:"4. Qual destas NÃO é uma estrutura presente em seres procariontes?",
+  opts:["a) Membrana plasmática","b) Citoplasma","c) Material genético","d) Membrana nuclear"],
+  certa:3, exp:"A membrana nuclear só existe em células eucariontes. Procariontes não a têm."},
+ {tema:"tA", tag:"Tipos de célula", txt:"5. São exemplos de seres eucariontes:",
+  opts:["a) Apenas bactérias","b) Animais, plantas, fungos e protistas","c) Apenas vírus","d) Apenas arqueias"],
+  certa:1, exp:"Todos os seres vivos, exceto bactérias e arqueias, são eucariontes: animais, plantas, fungos e protistas."},
+ {tema:"tA", tag:"Tipos de célula", txt:"6. A diferença principal entre célula eucarionte e procarionte é:",
+  opts:["a) A cor da célula","b) A presença ou ausência de membrana nuclear","c) O tamanho do citoplasma","d) A quantidade de água"],
+  certa:1, exp:"O critério é a presença (eucarionte) ou ausência (procarionte) do núcleo delimitado por membrana."},
+
+ {tema:"tB", tag:"Organelas", txt:"7. A organela responsável pela produção de energia a partir dos nutrientes é:",
+  opts:["a) Ribossomo","b) Lisossomo","c) Mitocôndria","d) Centríolo"],
+  certa:2, exp:"A mitocôndria faz a respiração celular e gera a energia que a célula usa para funcionar (a 'usina' da célula)."},
+ {tema:"tB", tag:"Organelas", txt:"8. Os ribossomos participam da:",
+  opts:["a) Produção de proteínas","b) Produção de energia","c) Digestão de partículas","d) Divisão celular"],
+  certa:0, exp:"Ribossomos produzem proteínas; podem ser levadas pelo retículo endoplasmático granuloso dentro da célula."},
+ {tema:"tB", tag:"Organelas", txt:"9. O lisossomo é típico de células animais e atua na:",
+  opts:["a) Produção de lipídios","b) Decomposição/digestão de partículas (reciclagem)","c) Armazenamento de água","d) Formação de cílios"],
+  certa:1, exp:"Lisossomos contêm enzimas que degradam partículas e partes celulares velhas (sistema de reciclagem); atuam na autofagia."},
+ {tema:"tB", tag:"Organelas", txt:"10. O retículo endoplasmático granuloso recebe esse nome porque:",
+  opts:["a) É liso","b) Tem ribossomos ligados a ele","c) Produz energia","d) Tem núcleo"],
+  certa:1, exp:"Ele é 'granuloso' porque tem ribossomos ligados; participa da produção e transporte de proteínas."},
+ {tema:"tB", tag:"Organelas", txt:"11. O retículo endoplasmático NÃO granuloso (liso) ajuda na:",
+  opts:["a) Produção de lipídios e eliminação de substâncias prejudiciais","b) Produção de proteínas","c) Digestão de partículas","d) Divisão celular"],
+  certa:0, exp:"RE liso produz lipídios e ajuda a eliminar substâncias prejudiciais; não tem ribossomos (por isso é 'liso')."},
+ {tema:"tB", tag:"Organelas", txt:"12. O complexo golgiense atua no:",
+  opts:["a) Armazenamento, modificação e encaminhamento de substâncias","b) Produção de energia","c) Digestão de partículas","d) Produção de proteínas"],
+  certa:0, exp:"O complexo de Golgi recebe proteínas/lipídios do retículo, modifica-os e os envia (empacotamento e transporte)."},
+ {tema:"tB", tag:"Organelas", txt:"13. Os centríolos estão relacionados aos processos de:",
+  opts:["a) Produção de energia","b) Divisão celular e formação de cílios/flagelos","c) Digestão","d) Produção de lipídios"],
+  certa:1, exp:"Centríolos atuam na divisão celular e na formação de cílios e flagelos (típicos de células animais)."},
+ {tema:"tB", tag:"Organelas", txt:"14. Qual organela é típica de células animais (dentre as citadas)?",
+  opts:["a) Mitocôndria","b) Ribossomo","c) Lisossomo","d) Retículo endoplasmático"],
+  certa:2, exp:"Lisossomos e centríolos são típicos de células animais; as demais também estão em células vegetais."},
+ {tema:"tB", tag:"Organelas", txt:"15. Na célula animal, o citoplasma é formado por:",
+  opts:["a) Apenas pelo núcleo","b) Citosol e organelas citoplasmáticas","c) Apenas pela membrana plasmática","d) Pelo material genético solto"],
+  certa:1, exp:"O citoplasma = citosol + organelas citoplasmáticas; as organelas trabalham de forma integrada."}
+];
+
+const respostas = new Array(questoes.length).fill(null);
+const quiz = document.getElementById('quiz');
+const verBtn = document.getElementById('verResultado');
+const scoreBox = document.getElementById('score');
+
+function construir() {
+questoes.forEach((q, qi) => {
+  const div = document.createElement('div');
+  div.className = 'q';
+  div.dataset.qi = qi;
+  div.innerHTML = `<div class="topo"><span class="tema ${q.tema}">${q.tag}</span></div>
+    <div class="enun">${q.txt}</div>`;
+  q.opts.forEach((op, oi) => {
+    const o = document.createElement('div');
+    o.className = 'opt';
+    o.dataset.oi = oi;
+    o.textContent = op;
+    div.appendChild(o);
+  });
+  const ans = document.createElement('div');
+  ans.className = 'ans';
+  ans.id = 'ans-'+qi;
+  div.appendChild(ans);
+  quiz.appendChild(div);
+});
+}
+
+construir();
+
+quiz.addEventListener('click', (e) => {
+  const opt = e.target.closest('.opt');
+  if (!opt || opt.classList.contains('bloq')) return;
+  const div = opt.closest('.q');
+  const qi = Number(div.dataset.qi);
+  const oi = Number(opt.dataset.oi);
+  responder(qi, oi, div, opt);
+});
+
+function responder(qi, oi, div, el) {
+  if (respostas[qi] !== null) return;
+  respostas[qi] = oi;
+  const certaIdx = questoes[qi].certa;
+  const opts = div.querySelectorAll('.opt');
+  opts.forEach((o, i) => {
+    o.classList.add('bloq');
+    if (i === certaIdx) o.classList.add('certa');
+    else if (i === oi) o.classList.add('errada');
+  });
+  const ans = document.getElementById('ans-'+qi);
+  const acertou = (oi === certaIdx);
+  ans.innerHTML = `<b>${acertou ? '✅ Acertou!' : '❌ Errou.'}</b> ${questoes[qi].exp}`;
+  ans.style.display = 'block';
+  atualizarProgresso();
+}
+
+function atualizarProgresso() {
+  const feitas = respostas.filter(r => r !== null).length;
+  verBtn.textContent = `Ver meu resultado (${feitas}/${questoes.length})`;
+  verBtn.disabled = (feitas < questoes.length);
+}
+
+verBtn.onclick = () => {
+  const acertos = respostas.filter((r, i) => r === questoes[i].certa).length;
+  const pct = Math.round((acertos / questoes.length) * 100);
+  let msg;
+  if (pct >= 80) msg = "🏆 Excelente! Você domina células e organelas.";
+  else if (pct >= 60) msg = "👍 Bom desempenho — revise as questões que errou.";
+  else msg = "📚 Revise os resumos de Ciências do portal e tente de novo.";
+  scoreBox.innerHTML = `Você acertou <b>${acertos}</b> de <b>${questoes.length}</b> questões.<br>
+    <span class="pct">${pct}%</span><br><span style="color:var(--muted);font-size:.95rem">${msg}</span>`;
+  scoreBox.style.display = 'block';
+  scoreBox.scrollIntoView({behavior:'smooth'});
+  verBtn.style.display = 'none';
+  document.getElementById('reiniciar').style.display = 'inline-block';
+};
+
+document.getElementById('reiniciar').onclick = () => {
+  respostas.fill(null);
+  quiz.innerHTML = '';
+  scoreBox.style.display = 'none';
+  scoreBox.innerHTML = '';
+  verBtn.style.display = 'inline-block';
+  document.getElementById('reiniciar').style.display = 'none';
+  construir();
+  atualizarProgresso();
+  window.scrollTo({top:0, behavior:'smooth'});
+};
+</script>
+<footer>Portal de estudos • PSS SEDUC-SP 2027 • Para a Aline ♥</footer>
+</body>
+</html>
